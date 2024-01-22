@@ -1,0 +1,88 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: build
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: casbin_test
+          MYSQL_DATABASE: casbin
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Build with Gradle
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
+          ./gradlew check
+          ./gradlew jacocoTestReport
+          bash <(curl -s https://codecov.io/bash)
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+<<<<<<< HEAD:.github/workflows/maven-ci.yml
+<<<<<<< HEAD:.github/workflows/gradle-ci.yml
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          node-version: 18
+=======
+          node-version: 20.8.1
+>>>>>>> a340245 (feat: using jcasbin int springSecurity)
+=======
+          node-version: 20.8.1
+=======
+          node-version: 20.8.1
+>>>>>>> e3fe8df (feat: using jcasbin int springSecurity)
+
+      - name: Sematic Release
+        run: |
+          npm install -g @conveyal/maven-semantic-release semantic-release
+          semantic-release --prepare @conveyal/maven-semantic-release --publish @semantic-release/github,@conveyal/maven-semantic-release --verify-conditions @semantic-release/github,@conveyal/maven-semantic-release --verify-release @conveyal/maven-semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          OSSRH_JIRA_USERNAME: ${{ secrets.OSSRH_JIRA_USERNAME }}
+          OSSRH_JIRA_PASSWORD: ${{ secrets.OSSRH_JIRA_PASSWORD }}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+          node-version: 20.8.1
+>>>>>>> 743f84a (feat: using jcasbin int springSecurity)
+=======
+=======
+>>>>>>> e3fe8df (feat: using jcasbin int springSecurity)
+>>>>>>> a340245 (feat: using jcasbin int springSecurity)
+=======
+          node-version: 20
+>>>>>>> 52dc8f2 (feat: add init code):.github/workflows/maven-ci.yml
+=======
+          node-version: 20
+>>>>>>> 679cb75 (feat: add init code):.github/workflows/gradle-ci.yml

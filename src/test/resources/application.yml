@@ -1,0 +1,32 @@
+server:
+  port: 8090
+spring:
+  security:
+    user:
+      name: user
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      password: pass
+<<<<<<< HEAD
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/casbin?useSSL=false
+    username: root
+    password: casbin_test
+=======
+mysql:
+  url: jdbc:mysql://localhost:3306/casbin?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PRC&characterEncoding=UTF8
+  username: root
+  password: 38941abc
+  driver: com.mysql.cj.jdbc.Driver
+>>>>>>> b9c78b6 (feat: using jcasbin int springSecurity)
+=======
+      password: pass
+>>>>>>> 743f84a (feat: using jcasbin int springSecurity)
+=======
+      password: pass
+>>>>>>> a340245 (feat: using jcasbin int springSecurity)
+=======
+      password: pass
+>>>>>>> e3fe8df (feat: using jcasbin int springSecurity)
