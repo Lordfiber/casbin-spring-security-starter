@@ -46,7 +46,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install mssql-tools unixodbc-dev
           echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-
       - name: Create database for sqlserver
         run: sqlcmd -S 127.0.0.1,1433 -U sa -P '9G3iqmzQDw9zCXII' -Q "CREATE DATABASE casbin"
 
@@ -71,4 +70,4 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 20
+          node-version: 20.8.1
