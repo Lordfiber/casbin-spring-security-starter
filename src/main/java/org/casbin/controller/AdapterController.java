@@ -47,6 +47,7 @@ public class AdapterController {
     public CommonResult InitDataAndLogin(Authentication authentication, HttpSession session) throws Exception {
 
         init();
+
         SecurityContext context = SecurityContextHolder.getContext();
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("readData1");
