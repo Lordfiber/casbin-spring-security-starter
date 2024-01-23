@@ -17,6 +17,7 @@ package org.casbin;
 import org.casbin.adapter.JDBCAdapter;
 import org.casbin.jcasbin.main.Enforcer;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,19 +25,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class JdbcTest {
-    @Value(value = "${mysql.url}")
-    private String url;
-    @Value(value = "${mysql.username}")
-    private String username;
-    @Value(value = "${mysql.password}")
-    private String password;
-    @Value(value = "${mysql.driver}")
-    private String driver;
+
+    private String url="jdbc:mysql://localhost:3306/casbin?useSSL=false&allowPublicKeyRetrieval=true";
+    private String username="root";
+    private String password="casbin_test";
+    private String driver="com.mysql.jdbc.Driver";
 
     @Test
     public void TestJdbc() throws Exception {
+        System.out.println(url);
+
         //save policy to database
         Enforcer e = new Enforcer("examples/rbac_model.conf", "examples/rbac_policy.csv");
         JDBCAdapter adapter = new JDBCAdapter(driver, url, username, password);
